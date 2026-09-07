@@ -1,14 +1,22 @@
 {
   "name": "gh-actions-practice",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Express app with landing page and health route",
   "main": "index.js",
- "scripts": { "test": "jest" },
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
   "devDependencies": {
-    "jest": "^28.1.0"
+    "jest": "^28.1.0",
+    "supertest": "^7.2.2"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0"
+  }
 }
