@@ -1,0 +1,14 @@
+name: Basics of GitHub Actions
+on :
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  hello-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello World
+        run: echo "Hello World"
+      - name: Show event info
+        run: echo "Triggered by ${{ github.event_name }} on ${{ github.ref }}"
