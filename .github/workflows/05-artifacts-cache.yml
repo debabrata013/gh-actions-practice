@@ -2,17 +2,17 @@ name: 05 - Artifacts and Cache
 on: workflow_dispatch
 
 jobs:
-  build:
+  build-job:
     runs-on: ubuntu-latest
     outputs:
       build_message: ${{ steps.build_info.outputs.build_message }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
       - name: Cache node_modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
@@ -31,8 +31,8 @@ jobs:
           name: build-output
           path: build-output.txt
 
-  verify:
-    needs: build
+  verify-job:
+    needs: build-job
     runs-on: ubuntu-latest
     steps:
       - name: Read job output

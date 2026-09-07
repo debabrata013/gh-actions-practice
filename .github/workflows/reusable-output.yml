@@ -1,4 +1,4 @@
-name: Reusable Output Workflow
+name: 07 Reusable Output Workflow
 
 on:
   workflow_call:
