@@ -1,0 +1,25 @@
+name: Reusable Output Workflow
+
+on:
+  workflow_call:
+    inputs:
+      message:
+        description: Message to pass into the reusable workflow
+        required: true
+        type: string
+    outputs:
+      result:
+        description: Result produced by the reusable workflow
+        value: ${{ jobs.produce.outputs.result }}
+
+jobs:
+  produce:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.create_output.outputs.result }}
+    steps:
+      - name: Create reusable workflow output
+        id: create_output
+        run: echo "result=${{ inputs.message }} - processed" >> "$GITHUB_OUTPUT"
+      - name: Show reusable workflow output
+        run: echo "Reusable workflow output: ${{ steps.create_output.outputs.result }}"

@@ -1,0 +1,20 @@
+name: 06 - Reusable Workflow Outputs
+
+on: workflow_dispatch
+
+jobs:
+  call_reusable:
+    uses: ./.github/workflows/reusable-output.yml
+    with:
+      message: Hello from the caller workflow
+
+  verify:
+    needs: call_reusable
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read workflow output
+        run: echo "Workflow output: ${{ needs.call_reusable.outputs.result }}"
+      - name: Verify workflow output
+        env:
+          WORKFLOW_OUTPUT: ${{ needs.call_reusable.outputs.result }}
+        run: test "$WORKFLOW_OUTPUT" = "Hello from the caller workflow - processed"

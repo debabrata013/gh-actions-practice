@@ -1,9 +1,11 @@
 name: 05 - Artifacts and Cache
-on: [push]
+on: workflow_dispatch
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      build_message: ${{ steps.build_info.outputs.build_message }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -16,9 +18,27 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
       - run: npm install
       - name: Create a build artifact
-        run: echo "build output $(date)" > build-output.txt
+        run: echo "build output - stable marker" > build-output.txt
+      - name: Create step output
+        id: build_info
+        run: echo "build_message=Build artifact is ready" >> "$GITHUB_OUTPUT"
+      - name: Read step output
+        run: echo "Step output: ${{ steps.build_info.outputs.build_message }}"
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-output
           path: build-output.txt
+
+  verify:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read job output
+        run: echo "Job output: ${{ needs.build.outputs.build_message }}"
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+      - name: Verify artifact
+        run: grep -q "stable marker" build-output.txt
