@@ -2,7 +2,7 @@ name: 03 - Matrix
 on: [push]
 
 jobs:
-  test:
+  test-job:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -15,7 +15,7 @@ jobs:
       - run: npm install
       - run: npm test
 
-  lint:
+  lint-job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
