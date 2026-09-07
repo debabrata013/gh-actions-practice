@@ -22,4 +22,5 @@ jobs:
         id: create_output
         run: echo "result=${{ inputs.message }} - processed" >> "$GITHUB_OUTPUT"
       - name: Show reusable workflow output
-        run: echo "Reusable workflow output: ${{ steps.create_output.outputs.result }}"
+        run: |
+         echo "Reusable workflow output: ${{ steps.create_output.outputs.result }}"

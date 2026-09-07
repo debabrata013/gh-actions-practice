@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Read workflow output
-        run: echo "Workflow output: ${{ needs.call_reusable.outputs.result }}"
+        run: |
+          echo "Workflow output: ${{ needs.call_reusable.outputs.result }}"
       - name: Verify workflow output
         env:
           WORKFLOW_OUTPUT: ${{ needs.call_reusable.outputs.result }}
